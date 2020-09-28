@@ -13,23 +13,43 @@
 # Output:
 # [5,6]
 
+# def find_disappeared_numbers(nums)
+#   nums.sort!
+#   i = 1
+#   n = nums.size + 1
+#   count = 0
+#   while i < n
+#     if !nums.include?(i)
+#       nums << i
+#       count += 1
+#     end
+#   i += 1
+#   end
+#   p nums
+#   nums.last(count)
+# end
+
 def find_disappeared_numbers(nums)
-  nums.sort!
+  n = nums.size
+
+  h_value = {}
+  h_value.default = 0
+  nums.each do |e|
+    h_value[e] += 1
+  end
+
+  p h_value
+
+  new_arr = []
   i = 1
-  n = nums.size + 1
-  count = 0
-  while i < n
-    if !nums.include?(i)
-      nums << i
-      count += 1
-    end
+  while i < n + 1
+    new_arr << i if h_value[i] < 1
   i += 1
   end
-  p nums
-  nums.last(count)
+  new_arr
 end
 
-p find_disappeared_numbers([4,3,2,7,8,2,3,1])
-# p find_disappeared_numbers([3,2,7,7,2,3,1,1])
-# p find_disappeared_numbers([3,2,7,7,2,3,1,1,4])
-# p find_disappeared_numbers([1,1])
+# p find_disappeared_numbers([4,3,2,7,8,2,3,1]) == [5,6]
+# p find_disappeared_numbers([3,2,7,7,2,3,1,1]) == [4,5,6,8]
+# p find_disappeared_numbers([3,2,7,7,2,3,1,1,4]) == [5,6,8,9]
+p find_disappeared_numbers([1,1]) == [2]
