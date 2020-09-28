@@ -13,6 +13,7 @@
 # Output: [1,2]
 # Explanation: The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2.
 
+# // TLE Solution
 def two_sum(numbers, target)
   n = numbers.size
   i = 0
@@ -31,6 +32,37 @@ def two_sum(numbers, target)
   end
   new_arr
 end
-p two_sum([2,7,11,15], 9)
-p two_sum([1], 0)
+
+# // Successfully submitted
+def two_sum(numbers, target)
+  h_value = {}
+  h_value.default = 0
+  numbers.each do |e|
+    h_value[e] += 1
+  end
+
+  h_index = {}
+  h_index.default = 0
+  numbers.each_with_index do |e, i|
+    h_index[e] = i
+  end
+
+  new_arr = []
+  numbers.each_with_index do |e, i|
+    t = target - e
+    if h_value[t] >= 1 && (i+1 < h_index[t]+1)
+      new_arr << i+1
+      new_arr << h_index[t]+1
+    break
+    end
+  end
+  new_arr
+end
+
+p two_sum([2,7,11,15], 9) == [1,2]
+p two_sum([2,4,5,7], 9) == [1,4]
+p two_sum([4,5,6,7], 11) == [1,4]
+p two_sum([-1,0], -1) == [1,2]
+p two_sum([-1,0,4], 3) == [1,3]
+
 
