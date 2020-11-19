@@ -31,26 +31,55 @@
 # 1 <= n <= 200
 # 1 <= rating[i] <= 10^5
 
+# def num_teams(rating)
+#   i = 0
+#   n = rating.size
+#   new_ar = []
+#   while i < n
+#     j = i + 2
+#     while j < n
+#       if rating[i] < rating[j-1] && rating[j] > rating[j-1]
+#       # p "rating[i] = #{rating[i]}, rating[j-1] = #{rating[j-1]}, rating[j] = #{rating[j]}"
+#       [rating[i], rating[j-1], rating[j]]
+#       end
+#       p "#{rating[i] > rating[j-1] && rating[j] < rating[j-1]}, rating[i] = #{rating[i]}, rating[j-1] = #{rating[j-1]}, rating[j] = #{rating[j]}"
+#       if rating[i] > rating[j-1] && rating[j] < rating[j-1]
+#       p [rating[i], rating[j-1], rating[j]]
+#       end
+#     j += 1
+#     end
+#   i += 1
+#   end
+# end
+
 def num_teams(rating)
-  i = 0
   n = rating.size
-  new_ar = []
-  while i < n
-    j = i + 2
-    while j < n
-      if rating[i] < rating[j-1] && rating[j] > rating[j-1]
-      # p "rating[i] = #{rating[i]}, rating[j-1] = #{rating[j-1]}, rating[j] = #{rating[j]}"
-      [rating[i], rating[j-1], rating[j]]
+  count = 0
+  i = 0
+  while i < n - 2
+    j = i + 1
+    while j < n - 1
+      k = j + 1
+      while k < n
+        count += 1 if increased_arr([rating[i], rating[j], rating[k]]) || decreased_arr([rating[i], rating[j], rating[k]])
+        k += 1
       end
-      p "#{rating[i] > rating[j-1] && rating[j] < rating[j-1]}, rating[i] = #{rating[i]}, rating[j-1] = #{rating[j-1]}, rating[j] = #{rating[j]}"
-      if rating[i] > rating[j-1] && rating[j] < rating[j-1]
-      p [rating[i], rating[j-1], rating[j]]
-      end
-    j += 1
+      j += 1
     end
-  i += 1
+    i += 1
   end
+  count
 end
 
-num_teams([2,5,3,4,1])
+def increased_arr(arr)
+  arr[0] < arr[1] && arr[1] < arr[2] ? true : false
+end
+
+def decreased_arr(arr)
+  arr[0] > arr[1] && arr[1] > arr[2] ? true : false
+end
+
+p num_teams([2,5,3,4,1]) == 3
+p num_teams([2,1,3]) == 0
+p num_teams([1,2,3,4]) == 4
 
