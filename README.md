@@ -1,4 +1,4 @@
-# CodeWars
+# Leetcode
 This repo contains all of my personal LeetCode solutions. The coding solutions provided within this repo are entirely provided by me
 
  | # | Title | Solution | Difficulty |
