@@ -14,35 +14,38 @@
 # Input: nums = [1,2,3,1,2,3], k = 2
 # Output: false
 
+# 12/14/2021 22:47: TLE  
+
+# def contains_nearby_duplicate(nums, k)
+#   i = 0
+#   while i < nums.size - 1
+#     j = i + 1
+#     while j < nums.size
+#       p "#{nums[i]}, #{nums[j]}, i:#{i}, j:#{j}, #{(j - i)}, k:#{k} #{nums[i] == nums[j] && (j - i) <= k }"
+#       return true if nums[i] == nums[j] && (j - i) <= k 
+#       j += 1
+#     end
+#     i += 1
+#   end
+#   false
+# end
+
 def contains_nearby_duplicate(nums, k)
-  h1 = {}
-  h2 = {}
-  h1.default = 0
-  h2.default = 0
-  nums.each_with_index do |val, i|
-    h1[i] = val
-    h2[val] += 1
-  end
-
-  repeated_element = []
-  h2.select {|k,v| repeated_element << k if v > 1}
-
-  new_arr_1 = []
-  repeated_element.each do |e|
-    new_arr = []
-    h1.each do |key, val|
-      # p "#{val == e}, #{key}"
-      new_arr << key if val == e
+  nums_hash = {}
+  nums_hash.default = nil
+  nums.each_with_index do |e, i|
+    if nums_hash[e] == nil
+      nums_hash[e] = i
+    else
+      p "i: #{i}, #{nums_hash[e]}"
+      return true if (i - nums_hash[e]) <= k
+      nums_hash[e] = i 
     end
-    new_arr_1 << new_arr
-  end
-
-  p new_arr_1
-
-  new_arr_1.each do |e|
-    return true if (e[1]-e[0]).abs == k
   end
   false
 end
 
 p contains_nearby_duplicate([1,0,1,1], 1) == true
+# p contains_nearby_duplicate([1,2,3,1,2,3], 2) == false
+# p contains_nearby_duplicate([1,2,3,1], 3) == true
+# p contains_nearby_duplicate([1,2,3,1,2,3], 2) == false
